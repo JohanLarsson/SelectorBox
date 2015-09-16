@@ -1,0 +1,51 @@
+﻿<Window x:Class="SelectorBox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:SelectorBox"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="MainWindow"
+        Width="525"
+        Height="350"
+        d:DataContext="{d:DesignInstance local:MainVm}"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <local:IconTemplateSelector x:Key="IconTemplateSelector" >
+            <local:IconTemplateSelector.InfoTemplate>
+                <DataTemplate>
+                    <TextBlock Text="i" Foreground="Blue"/>
+                </DataTemplate>
+            </local:IconTemplateSelector.InfoTemplate>
+
+            <local:IconTemplateSelector.WarningTemplate>
+                <DataTemplate>
+                    <TextBlock Text="?" Foreground="Orange"/>
+                </DataTemplate>
+            </local:IconTemplateSelector.WarningTemplate>
+
+            <local:IconTemplateSelector.ErrorTemplate>
+                <DataTemplate>
+                    <TextBlock Text="!" Foreground="Red"/>
+                </DataTemplate>
+            </local:IconTemplateSelector.ErrorTemplate>
+        </local:IconTemplateSelector>
+    </Window.Resources>
+    <Grid>
+        <ListBox ItemsSource="{Binding Events}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Event}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter Grid.Column="0"
+                                          Content="{Binding}"
+                                          ContentTemplateSelector="{StaticResource IconTemplateSelector}" />
+                        <TextBlock Grid.Column="1" Text="{Binding Text}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
